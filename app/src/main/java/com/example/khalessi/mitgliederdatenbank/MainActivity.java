@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 MitgliederOpenHelper.COL_NAME_ANSCHRIFT
         };
 
+        // TODO in der Selction dstand hier ein "*", mit dem leeren String läufts
         Cursor cursor = mitgliederDatenbank.query(MitgliederOpenHelper.TABLE_NAME_MITGLIEDER,
                 projection, "", null, null, null, null);
         cursor.moveToFirst();
