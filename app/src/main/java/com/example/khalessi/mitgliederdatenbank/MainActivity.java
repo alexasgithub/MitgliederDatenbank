@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         mitgliederDatenbank = moh.getWritableDatabase();
 
 
-
     }
-    public void aufnehmenClick (View view) {
 
+
+    public void aufnehmenClick(View view) {
 
 
         ContentValues neuesMitglied = new ContentValues();
@@ -46,17 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void auflistenClick(View view) {
 
-        String [] projection = {MitgliederOpenHelper.COL_NAME_ID, MitgliederOpenHelper.COL_NAME_NAME, MitgliederOpenHelper.COL_NAME_ANSCHRIFT};
-        Cursor cursor = mitgliederDatenbank.query(MitgliederOpenHelper.TABLE_NAME_MITGLIEDER, projection, "*",null, null, null, null);
+        String[] projection = {
+                MitgliederOpenHelper.COL_NAME_ID,
+                MitgliederOpenHelper.COL_NAME_NAME,
+                MitgliederOpenHelper.COL_NAME_ANSCHRIFT
+        };
+
+        Cursor cursor = mitgliederDatenbank.query(MitgliederOpenHelper.TABLE_NAME_MITGLIEDER,
+                projection, "", null, null, null, null);
         cursor.moveToFirst();
 
         dbListe.setText("");
         while (!cursor.isAfterLast()) {
-            String record = ""+cursor.getInt(0)+","; //Id
-            record+=cursor.getString(1)+","; //Name
-            record+=cursor.getString(1)+"\n"; //Anschrift
+            String record = "" + cursor.getInt(0) + ","; //Id
+            record += cursor.getString(1) + ","; //Name
+            record += cursor.getString(1) + "\n"; //Anschrift
 
-            dbListe.setText(dbListe.getText()+record);
+            dbListe.setText(dbListe.getText() + record);
 
             cursor.moveToNext();
         }
