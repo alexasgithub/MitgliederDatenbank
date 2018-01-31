@@ -14,24 +14,33 @@
         android:layout_margin="20dp"
         android:textStyle="bold"
         android:text="Liste der eingegebenen Anschriften" />
+    <Button
+        android:id="@+id/bt_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:onClick="auswahlLoeschenClick"
+        android:text="Auswahl löschen" />
 
     <ListView
         android:id="@+id/dbListe"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:choiceMode="singleChoice"
+        android:listSelector="#999999"
         android:text="" />
 
-
-
     <Button
-        android:id="@+id/button"
-        android:layout_margin="20dp"
+        android:id="@+id/bt_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onZurueckClick"
+        android:layout_margin="20dp"
         android:text="Zurück" />
+
+
 
 </LinearLayout>
