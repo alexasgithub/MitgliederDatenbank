@@ -17,6 +17,9 @@ public class MitgliederOpenHelper extends SQLiteOpenHelper {
     public static final String COL_NAME_NAME = "name";
     public static final String COL_NAME_ANSCHRIFT = "anschrift";
     public static final String COL_NAME_ID = "_id";
+    private static MitgliederOpenHelper instance;
+    private static int VERSION = 2;
+    private Context context;
 
     private final String SQL_COMMAND =
             "CREATE TABLE " + TABLE_NAME_MITGLIEDER + "(" +
@@ -25,9 +28,19 @@ public class MitgliederOpenHelper extends SQLiteOpenHelper {
                     COL_NAME_ANSCHRIFT + " VARCHAR(40) NOT NULL" +
                     " )";
 
+
+    public static MitgliederOpenHelper createInstance(Context context, String databaseName) {
+        if (instance == null) {
+
+            instance = new MitgliederOpenHelper(context, databaseName);
+        }
+
+        return instance;
+    }
+
     //
-    public MitgliederOpenHelper(Context context, String name, int version) {
-        super(context, name, null, version);
+    public MitgliederOpenHelper(Context context, String name) {
+        super(context, name, null, VERSION);
 
 
     }
@@ -60,5 +73,11 @@ public class MitgliederOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //TODO: aaf. Upgrade auf neue Version
+        if (oldVersion == 1 && newVersion == 2) {
+            try {
+                db.execSQL(SQL_COMMAND);
+            } catch (SQLException ex) {
+            }
+        }
     }
 }
