@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class ListActivity extends AppCompatActivity {
@@ -14,14 +16,14 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        TextView db_liste = (TextView) findViewById(R.id.dbListe);
+
 
         MitgliederOpenHelper moh = new MitgliederOpenHelper(this, "MitgliederDatenbank.db");
         mitgliederDatenbank = moh.getWritableDatabase();
 
         String[] projection = {MitgliederOpenHelper.COL_NAME_ID, MitgliederOpenHelper.COL_NAME_NAME, MitgliederOpenHelper.COL_NAME_ANSCHRIFT};
         Cursor cursor = mitgliederDatenbank.query(MitgliederOpenHelper.TABLE_NAME_MITGLIEDER, projection, "1=1", null, null, null, null);
-        cursor.moveToFirst();
+   /*     cursor.moveToFirst();
 
         db_liste.setText("");
 
@@ -33,7 +35,17 @@ public class ListActivity extends AppCompatActivity {
             db_liste.setText(db_liste.getText() + record);
 
             cursor.moveToNext();
-        }
+        }*/
+        //
+        String[] anzeigespalten = new String[]{MitgliederOpenHelper.COL_NAME_NAME,
+                MitgliederOpenHelper.COL_NAME_ANSCHRIFT};
+        int[] anzeigeViews = new int[]{R.id.lv_name, R.id.lv_anschrift};
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_item, cursor, anzeigespalten, anzeigeViews, 0);
+
+        ListView db_liste = (ListView) findViewById(R.id.dbListe);
+        db_liste.setAdapter(adapter);
+        db_liste.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     public void onZurueckClick(View view) {
