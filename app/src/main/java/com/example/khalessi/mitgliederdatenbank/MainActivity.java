@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         et_anschrift = (EditText) findViewById(R.id.et_anschrift);
         dbListe = (TextView) findViewById(R.id.dbListe);
 
-        MitgliederOpenHelper moh = new MitgliederOpenHelper(this, "MitgliederDatenbank.db", 1);
+        MitgliederOpenHelper moh = new MitgliederOpenHelper(this, "MitgliederDatenbank.db");
         mitgliederDatenbank = moh.getWritableDatabase();
 
 
