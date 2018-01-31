@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mitgliederDatenbank;
     private EditText et_name, et_anschrift;
     private Button btn_aufnehmen;
-    private TextView dbListe;
+    private ListView dbListe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         //Zugriff auf die Edit-Text-Felder schaffen
         et_name = (EditText) findViewById(R.id.et_name);
         et_anschrift = (EditText) findViewById(R.id.et_anschrift);
-        dbListe = (TextView) findViewById(R.id.dbListe);
+        dbListe = (ListView) findViewById(R.id.dbListe);
 
         MitgliederOpenHelper moh = new MitgliederOpenHelper(this, "MitgliederDatenbank.db");
         mitgliederDatenbank = moh.getWritableDatabase();
