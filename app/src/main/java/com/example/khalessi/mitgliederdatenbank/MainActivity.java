@@ -1,7 +1,6 @@
 package com.example.khalessi.mitgliederdatenbank;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -26,13 +25,15 @@ public class MainActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.et_name);
         et_anschrift = (EditText) findViewById(R.id.et_anschrift);
         dbListe = (TextView) findViewById(R.id.dbListe);
-        MitgliederOpenHelper moh = MitgliederOpenHelper.createInstance (this, "MitgliederDatenbank.db");
+
+        MitgliederOpenHelper moh = new MitgliederOpenHelper(this, "MitgliederDatenbank.db", 1);
         mitgliederDatenbank = moh.getWritableDatabase();
 
 
-    }
 
-    public void aufnehmenClick(View view) {
+    }
+    public void aufnehmenClick (View view) {
+
 
 
         ContentValues neuesMitglied = new ContentValues();
@@ -44,10 +45,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void auflistenClick(View view) {
-        //Sprung in die zweite Activity
-        Intent intent = new Intent();
-        intent.setClass(this, ListActivity.class);
-        startActivity(intent);
+
+        String [] projection = {MitgliederOpenHelper.COL_NAME_ID, MitgliederOpenHelper.COL_NAME_NAME, MitgliederOpenHelper.COL_NAME_ANSCHRIFT};
+        Cursor cursor = mitgliederDatenbank.query(MitgliederOpenHelper.TABLE_NAME_MITGLIEDER, projection, "*",null, null, null, null);
+        cursor.moveToFirst();
+
+        dbListe.setText("");
+        while (!cursor.isAfterLast()) {
+            String record = ""+cursor.getInt(0)+","; //Id
+            record+=cursor.getString(1)+","; //Name
+            record+=cursor.getString(1)+"\n"; //Anschrift
+
+            dbListe.setText(dbListe.getText()+record);
+
+            cursor.moveToNext();
+        }
+
 
     }
 }
